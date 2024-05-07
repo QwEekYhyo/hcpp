@@ -1,12 +1,12 @@
-#ifndef HPP_TCP_SOCKET
-#define HPP_TCP_SOCKET
+#ifndef HCPP_SERVER_HPP
+#define HCPP_SERVER_HPP
 
 #include <netinet/in.h>
 
-class TCPSocket {
+class Server {
     public:
-        TCPSocket();
-        ~TCPSocket();
+        Server();
+        ~Server();
         
         void listen(in_port_t port);
 

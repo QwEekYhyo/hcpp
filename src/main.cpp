@@ -1,7 +1,7 @@
-#include "../include/TCPSocket.hpp"
+#include "../include/Server.hpp"
 
 int main() {
-    TCPSocket caca;
+    Server caca;
     caca.listen(8080);
     return 0;
 }
