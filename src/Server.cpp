@@ -31,4 +31,31 @@ void Server::listen(in_port_t port) {
 
     if (::listen(m_fd, 4096) < 0)
         throw std::runtime_error(strerror(errno));
+
+
+    struct sockaddr_in client_address = {0};
+    socklen_t client_address_length;
+    for (;;) {
+        int client_fd =
+            accept(m_fd, (struct sockaddr*) &client_address, &client_address_length);
+        if (client_fd < 0) {
+            perror("accept");
+            exit(1);
+        }
+
+        char buf[1 << 16] = {0};
+        if (read(client_fd, &buf, sizeof(buf)) < 0) {
+            perror("read");
+            exit(1);
+        }
+
+        char reply[] = "HTTP/1.1 200 OK\r\nContent-Length: 0\r\n";
+
+        if (write(client_fd, &reply, sizeof(reply)) < 0) {
+            perror("write");
+            exit(1);
+        }
+
+        close(client_fd);
+    }
 }
